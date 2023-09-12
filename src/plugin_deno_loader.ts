@@ -294,6 +294,9 @@ export function denoLoaderPlugin(
       async function onLoad(
         args: esbuild.OnLoadArgs,
       ): Promise<esbuild.OnLoadResult | null> {
+        if (args.path.endsWith(".css")) {
+          return null;
+        }
         if (args.namespace === "file" && args.pluginData === IN_NODE_MODULES) {
           const contents = await Deno.readFile(args.path);
           return { loader: "js", contents };
